@@ -3,91 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
   <title>Animash Fusion Dex</title>
+  <meta name="description" content="ค้นหาสูตรผสมสัตว์ในเกม Animash: รูป ดาว ทอง/เพชร/รุ้ง status ability และชุดสัตว์">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='12' cy='16' r='9' fill='%236d4aff'/%3E%3Ccircle cx='20' cy='16' r='9' fill='%23ff6b4a' fill-opacity='.85'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="top">
-    <div class="brand">
-      <span class="logo">🧬</span>
-      <div>
-        <h1>Animash Fusion Dex</h1>
-        <p class="sub">ค้นหาว่าสัตว์ตัวไหนผสมกันแล้วได้อะไร · ข้อมูลจาก <a id="src" target="_blank" rel="noopener">The Unofficial Animash Wiki</a></p>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-eq" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-2.5L14 9V3"/><path d="M7 15h10"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6" cy="10" r="2"/><circle cx="10" cy="5.5" r="2"/><circle cx="14" cy="5.5" r="2"/><circle cx="18" cy="10" r="2"/><path d="M12 11c-3 0-6 4.5-6 7 0 1.7 1.3 2.5 3 2.5 1.2 0 2-.6 3-.6s1.8.6 3 .6c1.7 0 3-.8 3-2.5 0-2.5-3-7-6-7z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  </svg>
+
+  <header class="appbar">
+    <div class="appbar-in">
+      <a class="brand" href="./" aria-label="Animash Fusion Dex หน้าแรก">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Animash <b>Fusion Dex</b></span>
+      </a>
+      <label class="search">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <span class="sr">ค้นหา</span>
+        <input type="search" id="q" placeholder="ค้นหาชื่อสัตว์, ability, move…" autocomplete="off">
+      </label>
+      <div class="variant-switch" role="radiogroup" aria-label="รูปแบบพิเศษ">
+        <button role="radio" aria-checked="true" data-variant="normal" class="on"><span class="dot dot-normal"></span>ปกติ</button>
+        <button role="radio" aria-checked="false" data-variant="gold"><span class="dot dot-gold"></span>ทอง</button>
+        <button role="radio" aria-checked="false" data-variant="diamond"><span class="dot dot-diamond"></span>เพชร</button>
+        <button role="radio" aria-checked="false" data-variant="rainbow"><span class="dot dot-rainbow"></span>รุ้ง</button>
       </div>
-    </div>
-    <div class="variant-switch" role="radiogroup" aria-label="รูปแบบพิเศษ">
-      <button data-variant="normal" class="on">ปกติ</button>
-      <button data-variant="gold">🟡 ทอง <small>+3★</small></button>
-      <button data-variant="diamond">💎 เพชร <small>+5★</small></button>
-      <button data-variant="rainbow">🌈 รุ้ง <small>+7★</small></button>
     </div>
   </header>
 
-  <section class="mixer" aria-label="ผสมสัตว์">
-    <div class="slot" id="slotA">
-      <span class="slot-img"></span>
-      <input list="baseList" id="parentA" placeholder="สัตว์ตัวที่ 1" autocomplete="off">
-      <button class="clear" data-clear="parentA" aria-label="ล้าง">×</button>
+  <div class="page">
+    <section class="lab" aria-labelledby="labTitle">
+      <div class="lab-head">
+        <h1 id="labTitle"><svg class="ic"><use href="#i-flask"/></svg> Fusion Lab</h1>
+        <p>เลือกสัตว์ 2 ตัวเพื่อดูผลการผสม หรือเลือกตัวเดียวเพื่อดูทุกสูตรที่ใช้ตัวนั้น</p>
+      </div>
+      <div class="lab-row">
+        <div class="slot" id="slotA">
+          <span class="slot-img"></span>
+          <label class="slot-field"><span class="slot-label">ตัวที่ 1</span>
+            <input list="baseList" id="parentA" placeholder="พิมพ์ชื่อสัตว์" autocomplete="off"></label>
+          <button class="icon-btn clear" data-clear="parentA" aria-label="ล้างตัวที่ 1"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <span class="op" aria-hidden="true"><svg class="ic"><use href="#i-plus"/></svg></span>
+        <div class="slot" id="slotB">
+          <span class="slot-img"></span>
+          <label class="slot-field"><span class="slot-label">ตัวที่ 2</span>
+            <input list="baseList" id="parentB" placeholder="พิมพ์ชื่อสัตว์" autocomplete="off"></label>
+          <button class="icon-btn clear" data-clear="parentB" aria-label="ล้างตัวที่ 2"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <span class="op" aria-hidden="true"><svg class="ic"><use href="#i-eq"/></svg></span>
+        <div class="result" id="mixResult" aria-live="polite"></div>
+      </div>
+      <datalist id="baseList"></datalist>
+    </section>
+
+    <div class="layout">
+      <aside class="filters" id="filters" aria-label="ตัวกรอง">
+        <div class="filters-head">
+          <h2>ตัวกรอง</h2>
+          <button id="reset" class="link-btn">ล้างทั้งหมด</button>
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel" for="set"><svg class="ic"><use href="#i-layers"/></svg> ชุดสัตว์ (Animal Set)</label>
+          <select id="set"><option value="">ทุกชุด</option></select>
+          <p class="fhint">เกมสุ่มชุดสัตว์ให้ผสมใหม่ทุก 60 นาที เลือกชุดที่เจอเพื่อดูว่าผสมอะไรได้บ้าง</p>
+        </div>
+
+        <div class="fgroup">
+          <span class="flabel">จำนวนดาว</span>
+          <div class="range">
+            <select id="starMin" aria-label="ดาวต่ำสุด"></select>
+            <span>ถึง</span>
+            <select id="starMax" aria-label="ดาวสูงสุด"></select>
+          </div>
+        </div>
+
+        <div class="fgroup">
+          <span class="flabel">ระดับ (Rarity)</span>
+          <div class="rarity-chips" id="rarityChips"></div>
+        </div>
+
+        <div class="fgroup">
+          <span class="flabel">ประเภท</span>
+          <div class="seg" id="typeSeg" role="radiogroup" aria-label="ประเภท">
+            <button role="radio" data-type="" class="on" aria-checked="true">ทั้งหมด</button>
+            <button role="radio" data-type="Living" aria-checked="false">สิ่งมีชีวิต</button>
+            <button role="radio" data-type="Object" aria-checked="false">สิ่งของ</button>
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="fullOnly">
+          <span class="track" aria-hidden="true"></span>
+          เฉพาะตัวที่มีข้อมูล status ครบ
+        </label>
+      </aside>
+
+      <main class="results">
+        <div class="toolbar">
+          <button class="filter-toggle" id="filterToggle" aria-controls="filters" aria-expanded="false">
+            <svg class="ic"><use href="#i-filter"/></svg> ตัวกรอง <span class="badge" id="filterBadge" hidden></span>
+          </button>
+          <p class="count" id="count" aria-live="polite"></p>
+          <label class="sort">เรียงตาม
+            <select id="sort">
+              <option value="name">ชื่อ A→Z</option>
+              <option value="-name">ชื่อ Z→A</option>
+              <option value="-stars">ดาว มาก→น้อย</option>
+              <option value="stars">ดาว น้อย→มาก</option>
+              <option value="-power">พลัง Arena รวม</option>
+              <option value="-Vitality">Vitality</option>
+              <option value="-Attack">Attack</option>
+              <option value="-Defense">Defense</option>
+              <option value="-Accuracy">Accuracy</option>
+              <option value="-Dodge">Dodge</option>
+              <option value="-Luck">Luck</option>
+            </select>
+          </label>
+        </div>
+        <div class="active-chips" id="activeChips"></div>
+
+        <section class="set-strip-wrap" id="setWrap" hidden>
+          <h3 id="setTitle"></h3>
+          <div class="set-strip" id="setStrip"></div>
+        </section>
+
+        <div id="grid" class="grid"></div>
+        <div id="empty" class="empty" hidden>
+          <svg class="ic"><use href="#i-paw"/></svg>
+          <p>ไม่พบสัตว์ที่ตรงกับเงื่อนไข</p>
+          <button class="link-btn" data-action="reset">ล้างตัวกรอง</button>
+        </div>
+        <div id="sentinel"></div>
+      </main>
     </div>
-    <span class="plus">+</span>
-    <div class="slot" id="slotB">
-      <span class="slot-img"></span>
-      <input list="baseList" id="parentB" placeholder="สัตว์ตัวที่ 2" autocomplete="off">
-      <button class="clear" data-clear="parentB" aria-label="ล้าง">×</button>
-    </div>
-    <span class="plus">=</span>
-    <div class="result" id="mixResult"><span class="hint">เลือกสัตว์ 1 หรือ 2 ตัว เพื่อดูผลการผสม</span></div>
-    <datalist id="baseList"></datalist>
-  </section>
 
-  <section class="set-panel">
-    <label class="set-pick">🎲 ชุดสัตว์ (Animal Set)
-      <select id="set"><option value="">ทุกชุด</option></select>
-    </label>
-    <span class="set-note" id="setNote">เกมสุ่มชุดสัตว์ให้ผสมใหม่ทุก 60 นาที — เลือกชุดที่เจอตอนนี้เพื่อดูว่าผสมอะไรได้บ้าง</span>
-    <div class="set-strip" id="setStrip" hidden></div>
-  </section>
+    <footer class="foot">
+      ข้อมูลและรูปภาพจาก <a id="src" target="_blank" rel="noopener">The Unofficial Animash Wiki</a> (CC BY-SA) ·
+      ร่างทอง/เพชร/รุ้ง: ดาวและพลังคำนวณตามกฎของเกม
+    </footer>
+  </div>
 
-  <section class="controls">
-    <input type="search" id="q" placeholder="🔍 ค้นหาชื่อ / ability / move…">
-    <label>ดาว
-      <select id="starMin"></select> –
-      <select id="starMax"></select>
-    </label>
-    <label>ประเภท
-      <select id="type">
-        <option value="">ทั้งหมด</option>
-        <option value="Living">สิ่งมีชีวิต</option>
-        <option value="Object">สิ่งของ</option>
-      </select>
-    </label>
-    <label>เรียงตาม
-      <select id="sort">
-        <option value="name">ชื่อ A→Z</option>
-        <option value="-name">ชื่อ Z→A</option>
-        <option value="-stars">ดาว มาก→น้อย</option>
-        <option value="stars">ดาว น้อย→มาก</option>
-        <option value="-power">พลัง Arena รวม</option>
-        <option value="-Vitality">Vitality</option>
-        <option value="-Attack">Attack</option>
-        <option value="-Defense">Defense</option>
-        <option value="-Accuracy">Accuracy</option>
-        <option value="-Dodge">Dodge</option>
-        <option value="-Luck">Luck</option>
-      </select>
-    </label>
-    <label class="check"><input type="checkbox" id="fullOnly"> เฉพาะที่มีข้อมูลครบ</label>
-    <button id="reset" class="ghost">รีเซ็ต</button>
-  </section>
-  <div class="rarity-chips" id="rarityChips"></div>
-
-  <p class="count" id="count"></p>
-  <main id="grid" class="grid"></main>
-  <div id="sentinel"></div>
-
-  <dialog id="detail"><div id="detailBody"></div></dialog>
+  <dialog id="detail" aria-labelledby="dTitle"><div id="detailBody"></div></dialog>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
