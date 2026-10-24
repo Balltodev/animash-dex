@@ -21,8 +21,8 @@
   --r-sm: 10px;
   --r: 16px;
   --r-lg: 22px;
-  --body: "Inter", "Noto Sans Thai", system-ui, sans-serif;
-  --display: "Fredoka", "Noto Sans Thai", system-ui, sans-serif;
+  --body: "IBM Plex Sans Thai", system-ui, sans-serif;
+  --display: "Fredoka", "IBM Plex Sans Thai", system-ui, sans-serif;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
 @media (prefers-color-scheme: dark) {
@@ -342,8 +342,12 @@ dialog::backdrop { background: rgba(14, 12, 22, .55); backdrop-filter: blur(4px)
 .bar .num { text-align: right; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
 .bar.total { padding-top: 8px; border-top: 1px dashed var(--line); font-weight: 600; color: var(--ink); }
 .abilities { display: grid; gap: 8px; }
-.ab { background: var(--surface-2); border-radius: 14px; padding: 12px 14px; border-left: 3px solid var(--tc, var(--primary)); }
-.ab .tag { font-size: 11px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: var(--tc, var(--primary)); }
+.ab { background: var(--surface-2); border-radius: 14px; padding: 12px 14px; }
+.ab .tag {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; line-height: 1;
+  color: var(--tc, var(--primary)); background: color-mix(in srgb, var(--tc, var(--primary)) 13%, transparent); padding: 4px 8px; border-radius: 999px;
+}
+.ab b { margin-top: 6px; }
 .ab b { display: block; font-weight: 600; margin-top: 2px; }
 .ab p { margin: 3px 0 0; font-size: 14px; color: var(--ink-2); line-height: 1.6; }
 .ab.t-special { --tc: var(--primary); } .ab.t-ultra { --tc: var(--accent); } .ab.t-move { --tc: #22a565; } .ab.t-arena { --tc: #2f7bf0; } .ab.t-info { --tc: var(--muted); }
